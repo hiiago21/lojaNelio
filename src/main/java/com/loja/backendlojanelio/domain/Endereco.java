@@ -1,16 +1,16 @@
 package com.loja.backendlojanelio.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 public class Endereco implements Serializable {
 
@@ -29,4 +29,17 @@ public class Endereco implements Serializable {
     @ManyToOne
     @JoinColumn(name = "cidade_id")
     private Cidade cidade;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Endereco)) return false;
+        Endereco endereco = (Endereco) o;
+        return Objects.equals(getId(), endereco.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }

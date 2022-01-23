@@ -1,7 +1,7 @@
 package com.loja.backendlojanelio.resources;
 
-import com.loja.backendlojanelio.domain.Categoria;
-import com.loja.backendlojanelio.services.CategoriaService;
+import com.loja.backendlojanelio.domain.Pedido;
+import com.loja.backendlojanelio.services.PedidoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/categorias")
+@RequestMapping("/pedidos")
 @RequiredArgsConstructor
-public class CategoriaResource {
+public class PedidoResource {
 
-    private final CategoriaService service;
+    private final PedidoService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> findByid(@PathVariable Integer id){
-        Categoria categoria = service.buscaCategoriaPorId(id);
-        return  ResponseEntity.ok().body(categoria);
+    public ResponseEntity<Pedido> findByid(@PathVariable Integer id){
+        Pedido pedido = service.buscaPedidoPorId(id);
+        return  ResponseEntity.ok().body(pedido);
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CategoriaService {
 
-    private CategoriaRepository repository;
+    private final CategoriaRepository repository;
 
     public Categoria buscaCategoriaPorId(Integer id){
         return repository.findById(id).orElseThrow(()-> new ObjectNotFoundException(String.format("Objeto de id: %s, não encontrado", id)));

@@ -1,17 +1,19 @@
 package com.loja.backendlojanelio.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 @Entity
 public class Pedido implements Serializable {
@@ -19,6 +21,7 @@ public class Pedido implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date instante;
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -28,4 +31,19 @@ public class Pedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "endereco_entrega_id")
     private Endereco enderecoEntrega;
+    @OneToMany(mappedBy = "id.pedido")
+    private final Set<ItemPedido> itens = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pedido)) return false;
+        Pedido pedido = (Pedido) o;
+        return Objects.equals(getId(), pedido.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }
