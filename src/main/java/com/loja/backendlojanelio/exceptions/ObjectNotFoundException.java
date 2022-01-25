@@ -1,12 +1,15 @@
 package com.loja.backendlojanelio.exceptions;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-@AllArgsConstructor
-@NoArgsConstructor
 public class ObjectNotFoundException extends RuntimeException{
 
-    private String mensagem;
+    private final String mensagem;
 
+    public ObjectNotFoundException(String mensagem) {
+        this.mensagem = mensagem;
+    }
+
+    public ObjectNotFoundException(String message, Throwable cause, String mensagem) {
+        super(message, cause);
+        this.mensagem = mensagem;
+    }
 }

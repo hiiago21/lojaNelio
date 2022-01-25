@@ -13,6 +13,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@Builder
 public class Categoria implements Serializable {
 
     @Id

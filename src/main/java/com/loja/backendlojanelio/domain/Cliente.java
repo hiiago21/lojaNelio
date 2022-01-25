@@ -12,6 +12,7 @@ import java.util.*;
 @Getter
 @Setter
 @Entity
+@Builder
 public class Cliente implements Serializable {
 
     @Id

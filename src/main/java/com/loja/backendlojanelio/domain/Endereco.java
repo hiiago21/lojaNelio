@@ -12,6 +12,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@Builder
 public class Endereco implements Serializable {
 
     @Id
