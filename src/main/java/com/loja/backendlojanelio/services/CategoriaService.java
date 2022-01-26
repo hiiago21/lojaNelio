@@ -1,8 +1,11 @@
 package com.loja.backendlojanelio.services;
 
 import com.loja.backendlojanelio.domain.Categoria;
+import com.loja.backendlojanelio.domain.Cliente;
 import com.loja.backendlojanelio.exceptions.ObjectNotFoundException;
 import com.loja.backendlojanelio.repositories.CategoriaRepository;
+import com.loja.backendlojanelio.resources.dto.CategoriaInputDTO;
+import com.loja.backendlojanelio.resources.dto.ClienteInputDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,9 +28,14 @@ public class CategoriaService {
         return repository.save(obj);
     }
 
-    public Categoria update(Categoria obj) {
-        findById(obj.getId());
-        return repository.save(obj);
+    public Categoria update(CategoriaInputDTO obj) {
+        Categoria categoria = findById(obj.getId());
+        updateData(categoria, obj);
+        return repository.save(categoria);
+    }
+
+    private void updateData(Categoria categoria, CategoriaInputDTO obj) {
+        categoria.setNome(obj.getNome());
     }
 
     public void delete(Integer id) {

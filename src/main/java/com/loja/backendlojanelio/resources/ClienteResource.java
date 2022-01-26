@@ -63,16 +63,12 @@ public class ClienteResource {
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Integer id,
                                        @Valid @RequestBody ClienteInputDTO obj){
-        Cliente cliente = service.findById(id);
-        service.update(updateData(cliente, obj));
+
+        service.update(obj, id);
         return ResponseEntity.noContent().build();
     }
 
-    private Cliente updateData(Cliente cliente, ClienteInputDTO obj) {
-        cliente.setEmail(obj.getEmail());
-        cliente.setNome(obj.getNome());
-        return cliente;
-    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id){

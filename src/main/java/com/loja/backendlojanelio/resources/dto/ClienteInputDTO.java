@@ -1,5 +1,6 @@
 package com.loja.backendlojanelio.resources.dto;
 
+import com.loja.backendlojanelio.domain.Cliente;
 import lombok.*;
 
 import javax.validation.constraints.Email;

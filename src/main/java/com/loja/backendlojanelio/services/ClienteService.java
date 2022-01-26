@@ -3,6 +3,7 @@ package com.loja.backendlojanelio.services;
 import com.loja.backendlojanelio.domain.Cliente;
 import com.loja.backendlojanelio.exceptions.ObjectNotFoundException;
 import com.loja.backendlojanelio.repositories.ClienteRepository;
+import com.loja.backendlojanelio.resources.dto.ClienteInputDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,9 +33,15 @@ public class ClienteService {
         return repository.findAll(pageRequest);
     }
 
-    public Cliente update(Cliente obj) {
-        repository.findById(obj.getId());
-        return repository.save(obj);
+    public Cliente update(ClienteInputDTO obj, Integer id) {
+        Cliente cliente = findById(id);
+        updateData(cliente, obj);
+        return repository.save(cliente);
+    }
+
+    private void updateData(Cliente cliente, ClienteInputDTO obj) {
+        cliente.setEmail(obj.getEmail());
+        cliente.setNome(obj.getNome());
     }
 
     public void delete(Integer id) {
