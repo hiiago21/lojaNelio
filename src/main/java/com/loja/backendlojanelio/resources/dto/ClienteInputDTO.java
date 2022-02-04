@@ -1,6 +1,6 @@
 package com.loja.backendlojanelio.resources.dto;
 
-import com.loja.backendlojanelio.domain.Cliente;
+import com.loja.backendlojanelio.services.validators.ClienteUpdate;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ClienteUpdate
 public class ClienteInputDTO {
 
     @NotEmpty(message="Preenchimento obrigatório")

@@ -1,5 +1,6 @@
 package com.loja.backendlojanelio.domain;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @Data
 @Entity
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento{
 
     private Integer numeroParcelas;

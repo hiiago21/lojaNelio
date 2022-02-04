@@ -4,39 +4,41 @@ import com.loja.backendlojanelio.domain.Cliente;
 import com.loja.backendlojanelio.enums.TipoCliente;
 import com.loja.backendlojanelio.exceptions.FieldMessage;
 import com.loja.backendlojanelio.repositories.ClienteRepository;
+import com.loja.backendlojanelio.resources.dto.ClienteInputDTO;
 import com.loja.backendlojanelio.resources.dto.ClienteNewDTO;
 import com.loja.backendlojanelio.services.validators.utils.BR;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.HandlerMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Objects.isNull;
 
-public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
+public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteInputDTO> {
+
+    @Autowired
+    private HttpServletRequest request;
 
     @Autowired
     private ClienteRepository repository;
 
     @Override
-    public void initialize(ClienteInsert ann) {
+    public void initialize(ClienteUpdate ann) {
     }
 
     @Override
-    public boolean isValid(ClienteNewDTO objDto, ConstraintValidatorContext context) {
+    public boolean isValid(ClienteInputDTO objDto, ConstraintValidatorContext context) {
         List<FieldMessage> list = new ArrayList<>();
-
-        if (objDto.getTipoCliente().equals(TipoCliente.PESSOAFISICA.getCod()) && !BR.isValidCPF(objDto.getCpfOuCnpj())){
-            list.add(new FieldMessage("cpfCnpj", "Cpf inválido"));
-        } else if (objDto.getTipoCliente().equals(TipoCliente.PESSOAJURIDICA.getCod()) && !BR.isValidCPF(objDto.getCpfOuCnpj())){
-            list.add(new FieldMessage("cpfCnpj", "Cnpj inválido"));
-        }
-
+        Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+        Integer uriId = Integer.valueOf(map.get("id"));
         Cliente cliente = repository.findByEmail(objDto.getEmail());
 
-        if(!isNull(cliente)){
+        if(!isNull(cliente) && !cliente.getId().equals(uriId)){
             list.add(new FieldMessage("email", "email já existe"));
         }
 
@@ -45,7 +47,6 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
             context.buildConstraintViolationWithTemplate(e.getMessage())
                     .addPropertyNode(e.getFieldName()).addConstraintViolation();
         }
-
         return list.isEmpty();
     }
 }

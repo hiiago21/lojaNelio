@@ -42,6 +42,10 @@ public class Pedido implements Serializable {
         return Objects.equals(getId(), pedido.getId());
     }
 
+    public Double getValorTotal(){
+        return itens.stream().map(ItemPedido::getPreco).reduce(0.0, Double::sum);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(getId());

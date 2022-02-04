@@ -51,4 +51,8 @@ public class CategoriaService {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repository.findAll(pageRequest);
     }
+
+    public List<Categoria> findAllById(List<Integer> ids) {
+        return repository.findAllById(ids);
+    }
 }

@@ -33,9 +33,18 @@ public class ItemPedido {
         return id.getProduto();
     }
 
+
+    public void setProduto(Produto produto){
+        id.setProduto(produto);
+    }
+
     @JsonIgnore
     public Pedido getPedido(){
         return id.getPedido();
+    }
+
+    public void setPedido(Pedido pedido){
+         id.setPedido(pedido);
     }
 
     @Override
@@ -44,6 +53,10 @@ public class ItemPedido {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
+    }
+
+    public Double getSubTotal(){
+        return (this.getPreco() - this.getDesconto()) * this.getQuantidade();
     }
 
     @Override
